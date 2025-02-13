@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WaibyGPT</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image" sizes="16x16">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/ionicons.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Login-Form-Dark.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-900 text-white">
+  <section>
+      <!-- Navbar -->
+      <nav class="navbar bg-gray-900 p-4 fixed top-0 w-full z-50">
+          <div class="container mx-auto flex justify-between items-center">
+              <!-- Brand Logo -->
+              <a href="#" class="flex items-center text-lg font-semibold text-white">
+                  <i class="fas fa-graduation-cap mr-2"></i>
+                  <b>WaibyGPT</b>
+              </a>
+  
+              <!-- Navigation Links -->
+              <div class="space-x-4">
+                  <a href="/index" class="text-gray-300 hover:text-white">Home</a>
+                  <button onclick="openModal('aboutModal')" class="text-gray-300 hover:text-white">About Us</button>
+                  <button onclick="openModal('suggestionModal')" class="text-gray-300 hover:text-white">Suggestion Box</button>
+                  <a href="/logout" class="text-black rounded-full bg-red-600 hover:text-white p-2">Log Out</a>
+              </div>
+          </div>
+      </nav>
+  
+      <!-- Modals -->
+      <!-- About Us Modal -->
+      <div id="aboutModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div class="bg-gray-800 p-6 rounded-lg w-11/12 md:w-1/2 max-h-[80vh] overflow-y-auto">
+              <h2 class="text-xl font-semibold mb-4">About Us</h2>
+              <img src="../static/images/campus.jpeg" alt="CRCE Campus" class="w-full h-auto rounded-lg border-2 border-black mb-4">
+              <p class="text-sm text-gray-400 text-justify">
+                  Located in a picturesque environment in the heart of the Baramula Town, is one of the renowned, premier and sought-after Kashmir Unevrity Campus. The Institute is dedicated to making a difference in Engineering education, with its exclusive approach towards the ongoing momentum of trends in technology and holistic development.
+              </p>
+              <p class="text-sm text-gray-400 text-justify mt-2">
+                  The Institute today proudly bears the founder's name as a fitting tribute to his impassioned faith in highly-qualified and fully-trained engineers and technicians in the service of the nation.
+              </p>
+              <h3 class="text-lg font-semibold mt-4">Contact Us</h3>
+              <ul class="list-disc pl-5 text-sm text-gray-400">
+                  <li>Email: WaibyGPT@gmail.com</li>
+                  <li>By Nuwaib AKA Tajamul 😊</li>
+              </ul>
+              <button onclick="closeModal('aboutModal')" class="mt-4 bg-red-600 hover:bg-red-500 transition p-2 rounded-md text-white">Close</button>
+          </div>
+      </div>
+  
+      <!-- Suggestion Box Modal -->
+      <div id="suggestionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div class="bg-gray-800 p-6 rounded-lg w-11/12 md:w-1/2">
+              <h2 class="text-xl font-semibold mb-4">Suggestion Box</h2>
+              <form action="/suggestion" method="POST" class="space-y-4">
+                  <input type="email" name="uemail" placeholder="Email" required
+                      class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-blue-400 text-white">
+                  <textarea name="message" placeholder="Enter your suggestion..." required
+                      class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-blue-400 text-white"></textarea>
+                  <div class="flex justify-end space-x-2">
+                      <button type="button" onclick="closeModal('suggestionModal')"
+                          class="bg-red-600 hover:bg-red-500 transition p-2 rounded-md text-white">Close</button>
+                      <button type="submit"
+                          class="bg-blue-600 hover:bg-blue-500 transition p-2 rounded-md text-white">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  
+      <!-- JavaScript for Modal Handling -->
+      <script>
+          function openModal(modalId) {
+              document.getElementById(modalId).classList.remove('hidden');
+          }
+  
+          function closeModal(modalId) {
+              document.getElementById(modalId).classList.add('hidden');
+          }
+      </script>
+
+<section class="msger bg-gray-900 text-white p-4 rounded-lg shadow-lg h-[40rem] w-screen mx-auto px-10 mt-20">
+  
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert bg-green-500 text-white p-3 rounded-md mb-4 flex justify-between items-center" id="alert" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="text-white focus:outline-none" data-dismiss="alert" aria-label="Close">
+      &times;
+    </button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  
+  <main class="msger-chat space-y-4 overflow-y-auto h-[40rem] w-[50rem] p-4">
+    <div class="msg left-msg flex items-start gap-3">
+      <div class="msg-img w-12 h-12 bg-cover bg-center rounded-full" style="background-image: url(../static/images/groot.jpg)"></div>
+      <div class="msg-bubble bg-gray-800 p-3 rounded-lg shadow-md">
+        <div class="msg-info">
+          <span class="msg-info-name font-bold text-blue-400">WaibyGPT</span>
+        </div>
+        <div class="msg-text text-white">Hi there, Welcome to WaibyGPT! 👋 If you need any assistance, I'm always here.</div>
+      </div>
+    </div>
+    
+    <div class="msg left-msg flex items-start gap-3">
+      <div class="msg-img w-12 h-12 bg-cover bg-center rounded-full" style="background-image: url(../static/images/groot.jpg)"></div>
+      <div class="msg-bubble bg-gray-800 p-3 rounded-lg shadow-md">
+        <div class="msg-info">
+          <span class="msg-info-name font-bold text-blue-400">WaibyGPT</span>
+        </div>
+        <div class="msg-text text-white">
+          Which of the following user groups do you belong to?
+          <br><br>1.&emsp;Student's Section Enquiry.<br>2.&emsp;Faculty Section Enquiry.<br>3.&emsp;Parent's Section Enquiry.<br>4.&emsp;Visitor's Section Enquiry.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <form class="msger-inputarea flex items-center bg-gray-800 p-2 rounded-md mt-4">
+    <input type="text" class="msger-input flex-grow p-2 bg-gray-700 text-white rounded-l-md outline-none" id="textInput" placeholder="Enter your enquiry number...">
+    <button type="submit" class="msger-send-btn bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600">Send</button>
+  </form>
+</section>
+
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+
+    $("#alert").delay(3000).slideUp(200, function() {
+    $(this).alert('close');
+    });
+
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
+    
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+
+    // Icons made by Freepik from www.flaticon.com
+    const BOT_IMG = "../static/images/groot.jpg";
+    const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
+    const BOT_NAME = "WaibyGPT";
+    const PERSON_NAME = "You";
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+      msgerInput.value = "";
+      botResponse(msgText);
+    });
+
+    function appendMessage(name, img, side, text) {
+      //   Simple solution for small apps
+      const msgHTML = `
+<div class="msg ${side}-msg">
+  <div class="msg-img" style="background-image: url(${img})"></div>
+
+  <div class="msg-bubble">
+    <div class="msg-info">
+      <div class="msg-info-name">${name}</div>
+      <div class="msg-info-time">${formatDate(new Date())}</div>
+    </div>
+
+    <div class="msg-text">${text}</div>
+  </div>
+</div>
+`;
+
+      msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+      msgerChat.scrollTop += 500;
+    }
+
+    function botResponse(rawText) {
+
+      // Bot Response
+      $.get("/get", { msg: rawText }).done(function (data) {
+        console.log(rawText);
+        console.log(data);
+        const msgText = data;
+        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+
+      });
+
+    }
+
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+      const h = "0" + date.getHours();
+      const m = "0" + date.getMinutes();
+
+      return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
