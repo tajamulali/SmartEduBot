@@ -14,7 +14,7 @@ list_trainer = ListTrainer(chatbot)
 corpus_trainer = ChatterBotCorpusTrainer(chatbot)
 
 # Load dataset.txt (if available)
-dataset_path = "dataset.txt"
+dataset_path = "static/dataset.txt"
 if os.path.exists(dataset_path):
     with open(dataset_path, "r", encoding="utf-8") as file:
         conversation = [line.strip() for line in file.readlines() if line.strip()]
