@@ -1,20 +1,16 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 
-# Creating ChatBot Instance
+# Load trained chatbot (NO TRAINING HERE)
 chatbot = ChatBot(
-    'WaibyGPT',
+    'SmartEduBot',
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
     logic_adapters=[
-        {
-            'import_path': 'chatterbot.logic.BestMatch',
-            'default_response': "Hi there, Welcome to WaibyGPT! 👋 If you need any assistance, I'm always here.\n\nGo ahead and write the number of any query. 😃✨<br><br>\n1. Student's Section Enquiry.<br>\n2. Faculty Section Enquiry.<br>\n3. Parent's Section Enquiry.<br>\n4. Visitor's Section Enquiry.<br>",
-            'maximum_similarity_threshold': 0.90
-        }
+        {'import_path': 'chatterbot.logic.BestMatch'},
+        {'import_path': 'chatterbot.logic.MathematicalEvaluation'}
     ],
-    database_uri='sqlite:///database.sqlite3'  # Storing trained responses
+    database_uri='sqlite:///database.sqlite3'
 )
 
-# Training should be done separately in train.py, so we don't retrain on every run
-if __name__ == "__main__":
-    print("Chatbot is ready to serve queries!")
+def get_response(user_input):
+    return chatbot.get_response(user_input)
