@@ -70,7 +70,12 @@ SmartEduBot will be accessible at `http://127.0.0.1:5000/`
 ## 💡 Why SmartEduBot?
 SmartEduBot is designed to enhance student learning through AI-powered conversations. It automates common academic queries, making learning more accessible and engaging. 
 
-🔗 **GitHub Repository:** [Your GitHub Link Here]  
-📧 **LinkenIn:** [Your Linkedin Here]  
+---
+
+### 📬 Contact & Socials
+👤 **Tajamul Ali**  
+🔗 [GitHub](https://github.com/tajamulali) | [LinkedIn](https://linkedin.com/in/tajamulali)  
+
+---
 
 Contributions are welcome! Feel free to fork, improve, and submit pull requests. 🚀
